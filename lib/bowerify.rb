@@ -1,6 +1,6 @@
 require "rails"
-require "bowerify/railtie"
 require "bowerify/assets_processor"
+require "bowerify/railtie"
 
 module Bowerify
 

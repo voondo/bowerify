@@ -1,7 +1,28 @@
-class Bowerify::AssetsProcessor < Sprockets::Processor
+class Bowerify::AssetsProcessor
   CSS_URL_RE = /(url\(('|"|))((.+?)\.(gif|png|jpg|jpeg|ttf|svg|woff2|woff|eot))(.*?\2\))/
+  VERSION = '3'
 
-  def evaluate(context, locals={})
+  def self.instance
+    @instance ||= new
+  end
+
+  def self.call(input)
+    instance.call(input)
+  end
+
+  def self.cache_key
+    instance.cache_key
+  end
+
+  attr_reader :cache_key
+
+  def initialize(options = {})
+    @cache_key = [self.class.name, VERSION, options].freeze
+  end
+
+  def call(input)
+    context = input[:environment].context_class.new(input)
+    data = input[:data]
     if bower_component?(context.pathname)
       fix_assets_path data, context
     else

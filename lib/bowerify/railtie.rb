@@ -4,12 +4,12 @@ module Bowerify
 
     config.before_initialize do |app|
       app.config.bower_components_path = [
-        Rails.root.join('lib', 'assets', 'components'),
-        Rails.root.join('vendor', 'assets', 'components')
+        Rails.root.join('vendor', 'assets', 'bower_components')
       ]
 
-      app.assets.register_preprocessor 'text/css', Bowerify::AssetsProcessor
-      app.assets.register_preprocessor 'application/javascript', Bowerify::AssetsProcessor
+      app.assets.register_postprocessor 'text/css', Bowerify::AssetsProcessor
+      app.assets.register_postprocessor 'application/javascript', Bowerify::AssetsProcessor
+      app.assets.register_postprocessor 'text/html', Bowerify::AssetsProcessor
     end
 
     config.after_initialize do |app|

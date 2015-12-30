@@ -6,10 +6,12 @@ module Bowerify
       app.config.bower_components_path = [
         Rails.root.join('vendor', 'assets', 'bower_components')
       ]
+    end
 
-      app.assets.register_postprocessor 'text/css', Bowerify::AssetsProcessor
-      app.assets.register_postprocessor 'application/javascript', Bowerify::AssetsProcessor
-      app.assets.register_postprocessor 'text/html', Bowerify::AssetsProcessor
+    config.assets.configure do |env|
+      env.register_postprocessor 'text/css', Bowerify::AssetsProcessor
+      env.register_postprocessor 'application/javascript', Bowerify::AssetsProcessor
+      env.register_postprocessor 'text/html', Bowerify::AssetsProcessor
     end
 
     config.after_initialize do |app|
